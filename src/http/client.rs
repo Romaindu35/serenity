@@ -168,11 +168,7 @@ impl HttpBuilder {
 fn parse_token(token: impl AsRef<str>) -> String {
     let token = token.as_ref().trim();
 
-    if token.starts_with("Bot ") || token.starts_with("Bearer ") {
-        token.to_string()
-    } else {
-        format!("Bot {token}")
-    }
+    token.to_string()
 }
 
 fn reason_into_header(reason: &str) -> Headers {
@@ -184,7 +180,7 @@ fn reason_into_header(reason: &str) -> Headers {
         Cow::Borrowed(value) => HeaderValue::from_str(value),
         Cow::Owned(value) => HeaderValue::try_from(value),
     }
-    .expect("Invalid header value even after percent encode");
+        .expect("Invalid header value even after percent encode");
 
     headers.insert("X-Audit-Log-Reason", header_value);
     headers
@@ -281,7 +277,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Bans a [`User`] from a [`Guild`], removing their messages sent in the last X number of
@@ -313,7 +309,7 @@ impl Http {
             },
             params: Some(vec![("delete_message_seconds", delete_message_seconds.to_string())]),
         })
-        .await
+            .await
     }
 
     /// Bans multiple users from a [`Guild`], optionally removing their messages.
@@ -335,7 +331,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Broadcasts that the current user is typing in the given [`Channel`].
@@ -356,7 +352,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Creates a [`GuildChannel`] in the [`Guild`] given its Id.
@@ -385,7 +381,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Creates a stage instance.
@@ -402,7 +398,7 @@ impl Http {
             route: Route::StageInstances,
             params: None,
         })
-        .await
+            .await
     }
 
     /// Creates a thread channel in the [`GuildChannel`] given its Id, with a base message Id.
@@ -426,7 +422,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Creates a thread channel not attached to a message in the [`GuildChannel`] given its Id.
@@ -448,7 +444,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Shortcut for [`Self::create_forum_post_with_attachments`]
@@ -483,7 +479,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Creates an emoji in the given [`Guild`] with the given data.
@@ -509,7 +505,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Creates an application emoji with the given data.
@@ -528,7 +524,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Create a follow-up message for an Interaction.
@@ -586,7 +582,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Creates new global application commands.
@@ -604,7 +600,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Creates new guild application commands.
@@ -624,7 +620,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Creates a guild with the data provided.
@@ -669,7 +665,7 @@ impl Http {
             route: Route::Guilds,
             params: None,
         })
-        .await
+            .await
     }
 
     /// Creates a new guild command.
@@ -695,7 +691,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Creates an [`Integration`] for a [`Guild`].
@@ -724,7 +720,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Creates a response to an [`Interaction`] from the gateway.
@@ -793,7 +789,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Creates a permission override for a member or a role in a channel.
@@ -817,7 +813,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Creates a private channel with a user.
@@ -832,7 +828,7 @@ impl Http {
             route: Route::UserMeDmChannels,
             params: None,
         })
-        .await
+            .await
     }
 
     async fn create_reaction_(
@@ -854,7 +850,7 @@ impl Http {
             },
             params: Some(vec![("burst", burst.to_string())]),
         })
-        .await
+            .await
     }
 
     /// Reacts to a message.
@@ -928,7 +924,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Creates a sticker.
@@ -939,7 +935,7 @@ impl Http {
     pub async fn create_sticker(
         &self,
         guild_id: GuildId,
-        map: impl IntoIterator<Item = (&'static str, String)>,
+        map: impl IntoIterator<Item=(&'static str, String)>,
         file: CreateAttachment,
         audit_log_reason: Option<&str>,
     ) -> Result<Sticker> {
@@ -957,7 +953,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Creates a test entitlement to a given SKU for a given guild or user. Discord will act as
@@ -996,7 +992,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Creates a webhook for the given [channel][`GuildChannel`]'s Id, passing in the given data.
@@ -1043,7 +1039,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes a private channel or a channel in a guild.
@@ -1062,7 +1058,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes a stage instance.
@@ -1081,7 +1077,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes an emoji from a guild.
@@ -1104,7 +1100,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes an application emoji.
@@ -1120,7 +1116,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes a follow-up message for an interaction.
@@ -1141,7 +1137,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes a global command.
@@ -1157,7 +1153,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes a guild, only if connected account owns it.
@@ -1172,7 +1168,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes a guild command.
@@ -1193,7 +1189,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Removes an integration from a guild.
@@ -1214,7 +1210,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes an invite by code.
@@ -1233,7 +1229,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes a message if created by us or we have specific permissions.
@@ -1254,7 +1250,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes a bunch of messages, only works for bots.
@@ -1274,7 +1270,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes all of the [`Reaction`]s associated with a [`Message`].
@@ -1311,7 +1307,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes all the reactions for a given emoji on a message.
@@ -1333,7 +1329,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes the initial interaction response.
@@ -1352,7 +1348,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes a permission override from a role or a member in a channel.
@@ -1373,7 +1369,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes a user's reaction from a message.
@@ -1397,7 +1393,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes a reaction by the current user from a message.
@@ -1419,7 +1415,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes a role from a server. Can't remove the default everyone role.
@@ -1440,7 +1436,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes a [Scheduled Event] from a server.
@@ -1465,7 +1461,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes a sticker from a server.
@@ -1488,7 +1484,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes a currently active test entitlement. Discord will act as though the corresponding
@@ -1505,7 +1501,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes a [`Webhook`] given its Id.
@@ -1542,7 +1538,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes a [`Webhook`] given its Id and unique token.
@@ -1583,7 +1579,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Changes channel information.
@@ -1605,7 +1601,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Edits a stage instance.
@@ -1625,7 +1621,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Changes guild emoji information.
@@ -1651,7 +1647,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Changes application emoji information.
@@ -1675,7 +1671,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Edits a follow-up message for an interaction.
@@ -1738,7 +1734,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Edits a global command.
@@ -1764,7 +1760,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Changes guild information.
@@ -1786,7 +1782,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Edits a guild command.
@@ -1814,7 +1810,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Edits a guild command permissions.
@@ -1842,7 +1838,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Edits the positions of a guild's channels.
@@ -1863,7 +1859,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Edits the MFA level of a guild. Requires guild ownership.
@@ -1890,8 +1886,8 @@ impl Http {
             },
             params: None,
         })
-        .await
-        .map(|mfa: GuildMfaLevel| mfa.level)
+            .await
+            .map(|mfa: GuildMfaLevel| mfa.level)
     }
 
     /// Edits a [`Guild`]'s widget.
@@ -1913,7 +1909,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Edits a guild welcome screen.
@@ -1935,7 +1931,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Does specific actions to a member.
@@ -2023,7 +2019,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Edits the current member for the provided [`Guild`] via its Id.
@@ -2045,7 +2041,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Edits the current user's nickname for the provided [`Guild`] via its Id.
@@ -2070,7 +2066,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Follow a News Channel to send messages to a target channel.
@@ -2092,7 +2088,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets the initial interaction response.
@@ -2111,7 +2107,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Edits the initial interaction response.
@@ -2162,7 +2158,7 @@ impl Http {
             route: Route::UserMe,
             params: None,
         })
-        .await
+            .await
     }
 
     /// Changes a role in a guild.
@@ -2256,7 +2252,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Changes a sticker in a guild.
@@ -2309,7 +2305,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Changes another user's voice state in a stage channel.
@@ -2359,7 +2355,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Changes the current user's voice state in a stage channel.
@@ -2410,7 +2406,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Changes a voice channel's status.
@@ -2432,7 +2428,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Edits a the webhook with the given data.
@@ -2483,7 +2479,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Edits the webhook with the given data.
@@ -2531,7 +2527,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Executes a webhook, posting a [`Message`] in the webhook's associated [`Channel`].
@@ -2649,7 +2645,7 @@ impl Http {
             },
             params: thread_id.map(|thread_id| vec![("thread_id", thread_id.to_string())]),
         })
-        .await
+            .await
     }
 
     /// Edits a webhook's message by Id.
@@ -2708,7 +2704,7 @@ impl Http {
             },
             params: thread_id.map(|thread_id| vec![("thread_id", thread_id.to_string())]),
         })
-        .await
+            .await
     }
 
     /// Gets the active maintenances from Discord's Status API.
@@ -2774,7 +2770,7 @@ impl Http {
             },
             params: Some(params),
         })
-        .await
+            .await
     }
 
     /// Gets all audit logs in a specific guild.
@@ -2810,7 +2806,7 @@ impl Http {
             },
             params: Some(params),
         })
-        .await
+            .await
     }
 
     /// Retrieves all auto moderation rules in a guild.
@@ -2827,7 +2823,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Retrieves an auto moderation rule in a guild.
@@ -2845,7 +2841,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Creates an auto moderation rule in a guild.
@@ -2869,7 +2865,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Retrieves an auto moderation rule in a guild.
@@ -2895,7 +2891,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes an auto moderation rule in a guild.
@@ -2918,7 +2914,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets current bot gateway.
@@ -2931,7 +2927,7 @@ impl Http {
             route: Route::GatewayBot,
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets all invites for a channel.
@@ -2946,7 +2942,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets all thread members for a thread.
@@ -2964,7 +2960,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets all active threads from a guild.
@@ -2979,7 +2975,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets all archived public threads from a channel.
@@ -3007,7 +3003,7 @@ impl Http {
             },
             params: Some(params),
         })
-        .await
+            .await
     }
 
     /// Gets all archived private threads from a channel.
@@ -3035,7 +3031,7 @@ impl Http {
             },
             params: Some(params),
         })
-        .await
+            .await
     }
 
     /// Gets all archived private threads joined from a channel.
@@ -3063,7 +3059,7 @@ impl Http {
             },
             params: Some(params),
         })
-        .await
+            .await
     }
 
     /// Joins a thread channel.
@@ -3078,7 +3074,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Leaves a thread channel.
@@ -3093,7 +3089,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Adds a member to a thread channel.
@@ -3113,7 +3109,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Removes a member from a thread channel.
@@ -3133,7 +3129,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     pub async fn get_thread_channel_member(
@@ -3153,7 +3149,7 @@ impl Http {
             },
             params: Some(vec![("with_member", with_member.to_string())]),
         })
-        .await
+            .await
     }
 
     /// Retrieves the webhooks for the given [channel][`GuildChannel`]'s Id.
@@ -3187,7 +3183,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets channel information.
@@ -3202,7 +3198,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets all channels in a guild.
@@ -3217,7 +3213,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets a stage instance.
@@ -3232,7 +3228,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Get a list of users that voted for this specific answer.
@@ -3292,7 +3288,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets information about the current application.
@@ -3307,7 +3303,7 @@ impl Http {
             route: Route::Oauth2ApplicationCurrent,
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets information about the user we're connected with.
@@ -3320,7 +3316,7 @@ impl Http {
             route: Route::UserMe,
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets all emojis of a guild.
@@ -3335,7 +3331,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets information about an emoji in a guild.
@@ -3351,7 +3347,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets all emojis for the current application.
@@ -3391,7 +3387,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     #[allow(clippy::too_many_arguments)]
@@ -3442,7 +3438,7 @@ impl Http {
             },
             params: Some(params),
         })
-        .await
+            .await
     }
 
     /// Gets current gateway.
@@ -3455,7 +3451,7 @@ impl Http {
             route: Route::Gateway,
             params: None,
         })
-        .await
+            .await
     }
 
     /// Fetches all of the global commands for your application.
@@ -3470,7 +3466,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Fetches all of the global commands for your application with localizations.
@@ -3485,7 +3481,7 @@ impl Http {
             },
             params: Some(vec![("with_localizations", true.to_string())]),
         })
-        .await
+            .await
     }
 
     /// Fetches a global commands for your application by its Id.
@@ -3501,7 +3497,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets guild information.
@@ -3516,7 +3512,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets guild information with counts.
@@ -3531,7 +3527,7 @@ impl Http {
             },
             params: Some(vec![("with_counts", true.to_string())]),
         })
-        .await
+            .await
     }
 
     /// Fetches all of the guild commands for your application for a specific guild.
@@ -3547,7 +3543,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Fetches all of the guild commands with localizations for your application for a specific
@@ -3567,7 +3563,7 @@ impl Http {
             },
             params: Some(vec![("with_localizations", true.to_string())]),
         })
-        .await
+            .await
     }
 
     /// Fetches a guild command by its Id.
@@ -3588,7 +3584,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Fetches all of the guild commands permissions for your application for a specific guild.
@@ -3607,7 +3603,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gives the guild command permission for your application for a specific guild.
@@ -3628,7 +3624,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets a guild widget information.
@@ -3645,7 +3641,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets a guild preview.
@@ -3660,7 +3656,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets a guild welcome screen information.
@@ -3675,7 +3671,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets integrations that a guild has.
@@ -3690,7 +3686,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets all invites to a guild.
@@ -3705,7 +3701,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets a guild's vanity URL if it has one.
@@ -3725,8 +3721,8 @@ impl Http {
             },
             params: None,
         })
-        .await
-        .map(|x| x.code)
+            .await
+            .map(|x| x.code)
     }
 
     /// Gets the members of a guild. Optionally pass a `limit` and the Id of the user to offset the
@@ -3785,7 +3781,7 @@ impl Http {
             },
             params: Some(vec![("days", days.to_string())]),
         })
-        .await
+            .await
     }
 
     /// Gets regions that a guild can use. If a guild has the `VIP_REGIONS` feature enabled, then
@@ -3801,7 +3797,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Retrieves a specific role in a [`Guild`].
@@ -3875,7 +3871,7 @@ impl Http {
             },
             params: Some(vec![("with_user_count", with_user_count.to_string())]),
         })
-        .await
+            .await
     }
 
     /// Gets a list of all scheduled events for the corresponding guild.
@@ -3898,7 +3894,7 @@ impl Http {
             },
             params: Some(vec![("with_user_count", with_user_count.to_string())]),
         })
-        .await
+            .await
     }
 
     /// Gets a list of all interested users for the corresponding scheduled event, with additional
@@ -3950,7 +3946,7 @@ impl Http {
             },
             params: Some(params),
         })
-        .await
+            .await
     }
 
     /// Retrieves a list of stickers in a [`Guild`].
@@ -4037,7 +4033,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets a paginated list of the current user's guilds.
@@ -4090,7 +4086,7 @@ impl Http {
             route: Route::UserMeGuilds,
             params: Some(params),
         })
-        .await
+            .await
     }
 
     /// Returns a guild [`Member`] object for the current user.
@@ -4182,7 +4178,7 @@ impl Http {
             },
             params: Some(params),
         })
-        .await
+            .await
     }
 
     /// Gets member of a guild.
@@ -4225,7 +4221,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets X messages from a channel.
@@ -4257,7 +4253,7 @@ impl Http {
             },
             params: Some(params),
         })
-        .await
+            .await
     }
 
     /// Retrieves a specific [`StickerPack`] from it's [`StickerPackId`]
@@ -4272,7 +4268,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Retrieves a list of all nitro sticker packs.
@@ -4290,8 +4286,8 @@ impl Http {
             route: Route::StickerPacks,
             params: None,
         })
-        .await
-        .map(|s| s.sticker_packs)
+            .await
+            .map(|s| s.sticker_packs)
     }
 
     /// Gets all pins of a channel.
@@ -4306,7 +4302,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets user Ids based on their reaction to a message. This endpoint is dumb.
@@ -4334,7 +4330,7 @@ impl Http {
             },
             params: Some(params),
         })
-        .await
+            .await
     }
 
     /// Gets all SKUs for the current application.
@@ -4349,7 +4345,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets a sticker.
@@ -4364,7 +4360,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets the current unresolved incidents from Discord's Status API.
@@ -4427,7 +4423,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets the current user's third party connections.
@@ -4444,7 +4440,7 @@ impl Http {
             route: Route::UserMeConnections,
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets our DM channels.
@@ -4457,7 +4453,7 @@ impl Http {
             route: Route::UserMeDmChannels,
             params: None,
         })
-        .await
+            .await
     }
 
     /// Gets all voice regions.
@@ -4470,7 +4466,7 @@ impl Http {
             route: Route::VoiceRegions,
             params: None,
         })
-        .await
+            .await
     }
 
     /// Retrieves a webhook given its Id.
@@ -4504,7 +4500,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Retrieves a webhook given its Id and unique token.
@@ -4544,7 +4540,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Retrieves a webhook given its url.
@@ -4581,7 +4577,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Kicks a member from a guild with a provided reason.
@@ -4602,7 +4598,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Leaves a guild.
@@ -4617,7 +4613,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Sends a message to a channel.
@@ -4673,7 +4669,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Unbans a user from a guild.
@@ -4694,7 +4690,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Deletes a single [`Role`] from a [`Member`] in a [`Guild`].
@@ -4721,7 +4717,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Returns a list of [`Member`]s in a [`Guild`] whose username or nickname starts with a
@@ -4776,7 +4772,7 @@ impl Http {
             },
             params: Some(vec![("days", days.to_string())]),
         })
-        .await
+            .await
     }
 
     /// Starts syncing an integration with a guild.
@@ -4796,7 +4792,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Starts typing in the specified [`Channel`] for an indefinite period of time.
@@ -4857,7 +4853,7 @@ impl Http {
             },
             params: None,
         })
-        .await
+            .await
     }
 
     /// Fires off a request, deserializing the response reader via the given type bound.

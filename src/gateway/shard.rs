@@ -20,7 +20,7 @@ use super::{
 use crate::constants::{self, close_codes};
 use crate::internal::prelude::*;
 use crate::model::event::{Event, GatewayEvent};
-use crate::model::gateway::{GatewayIntents, ShardInfo};
+use crate::model::gateway::{ShardInfo};
 use crate::model::id::{ApplicationId, GuildId};
 use crate::model::user::OnlineStatus;
 
@@ -75,7 +75,6 @@ pub struct Shard {
     pub started: Instant,
     pub token: String,
     ws_url: Arc<Mutex<String>>,
-    pub intents: GatewayIntents,
 }
 
 impl Shard {
@@ -91,7 +90,7 @@ impl Shard {
     /// use std::sync::Arc;
     ///
     /// use serenity::gateway::Shard;
-    /// use serenity::model::gateway::{GatewayIntents, ShardInfo};
+    /// use serenity::model::gateway::{ShardInfo};
     /// use serenity::model::id::ShardId;
     /// use tokio::sync::Mutex;
     /// #
@@ -107,7 +106,7 @@ impl Shard {
     ///
     /// // retrieve the gateway response, which contains the URL to connect to
     /// let gateway = Arc::new(Mutex::new(http.get_gateway().await?.url));
-    /// let shard = Shard::new(gateway, &token, shard_info, GatewayIntents::all(), None).await?;
+    /// let shard = Shard::new(gateway, &token, shard_info, None).await?;
     ///
     /// // at this point, you can create a `loop`, and receive events and match
     /// // their variants
@@ -123,7 +122,6 @@ impl Shard {
         ws_url: Arc<Mutex<String>>,
         token: &str,
         shard_info: ShardInfo,
-        intents: GatewayIntents,
         presence: Option<PresenceData>,
     ) -> Result<Shard> {
         let url = ws_url.lock().await.clone();
@@ -153,7 +151,6 @@ impl Shard {
             session_id,
             shard_info,
             ws_url,
-            intents,
         })
     }
 
@@ -387,16 +384,6 @@ impl Shard {
 
                 self.session_id = None;
             },
-            Some(close_codes::INVALID_GATEWAY_INTENTS) => {
-                error!("[{:?}] Invalid gateway intents have been provided.", self.shard_info);
-
-                return Err(Error::Gateway(GatewayError::InvalidGatewayIntents));
-            },
-            Some(close_codes::DISALLOWED_GATEWAY_INTENTS) => {
-                error!("[{:?}] Disallowed gateway intents have been provided.", self.shard_info);
-
-                return Err(Error::Gateway(GatewayError::DisallowedGatewayIntents));
-            },
             Some(other) if !clean => {
                 warn!(
                     "[{:?}] Unknown unclean close {}: {:?}",
@@ -598,7 +585,7 @@ impl Shard {
     /// ```rust,no_run
     /// # use tokio::sync::Mutex;
     /// # use serenity::gateway::{ChunkGuildFilter, Shard};
-    /// # use serenity::model::gateway::{GatewayIntents, ShardInfo};
+    /// # use serenity::model::gateway::{ShardInfo};
     /// # use serenity::model::id::ShardId;
     /// # use std::sync::Arc;
     /// #
@@ -609,7 +596,7 @@ impl Shard {
     /// #          total: 1,
     /// #     };
     /// #
-    /// #     let mut shard = Shard::new(mutex.clone(), "", shard_info, GatewayIntents::all(), None).await?;
+    /// #     let mut shard = Shard::new(mutex.clone(), "", shard_info, None).await?;
     /// #
     /// use serenity::model::id::GuildId;
     ///
@@ -623,7 +610,7 @@ impl Shard {
     ///
     /// ```rust,no_run
     /// # use tokio::sync::Mutex;
-    /// # use serenity::model::gateway::{GatewayIntents, ShardInfo};
+    /// # use serenity::model::gateway::{ShardInfo};
     /// # use serenity::gateway::{ChunkGuildFilter, Shard};
     /// # use serenity::model::id::ShardId;
     /// # use std::error::Error;
@@ -636,7 +623,7 @@ impl Shard {
     /// #          id: ShardId(0),
     /// #          total: 1,
     /// #     };
-    /// #     let mut shard = Shard::new(mutex.clone(), "", shard_info, GatewayIntents::all(), None).await?;
+    /// #     let mut shard = Shard::new(mutex.clone(), "", shard_info, None).await?;
     /// #
     /// use serenity::model::id::GuildId;
     ///
@@ -678,7 +665,7 @@ impl Shard {
     #[instrument(skip(self))]
     pub async fn identify(&mut self) -> Result<()> {
         self.client
-            .send_identify(&self.shard_info, &self.token, self.intents, &self.presence)
+            .send_identify(&self.shard_info, &self.token, &self.presence)
             .await?;
 
         self.last_heartbeat_sent = Some(Instant::now());

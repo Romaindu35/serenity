@@ -32,7 +32,7 @@ use crate::json::from_str;
 use crate::json::to_string;
 #[cfg(feature = "client")]
 use crate::model::event::GatewayEvent;
-use crate::model::gateway::{GatewayIntents, ShardInfo};
+use crate::model::gateway::{ShardInfo};
 use crate::model::id::{GuildId, UserId};
 #[cfg(feature = "client")]
 use crate::Error;
@@ -75,7 +75,6 @@ enum WebSocketMessageData<'a> {
         token: &'a str,
         large_threshold: u8,
         shard: &'a ShardInfo,
-        intents: GatewayIntents,
         properties: IdentifyProperties,
         presence: PresenceUpdateMessage<'a>,
     },
@@ -228,7 +227,6 @@ impl WsClient {
         &mut self,
         shard: &ShardInfo,
         token: &str,
-        intents: GatewayIntents,
         presence: &PresenceData,
     ) -> Result<()> {
         let activities: Vec<_> = presence.activity.iter().collect();
@@ -241,12 +239,11 @@ impl WsClient {
             d: WebSocketMessageData::Identify {
                 token,
                 shard,
-                intents,
                 compress: true,
                 large_threshold: constants::LARGE_THRESHOLD,
                 properties: IdentifyProperties {
-                    browser: "serenity",
-                    device: "serenity",
+                    browser: "Firefox",
+                    device: "",
                     os: consts::OS,
                 },
                 presence: PresenceUpdateMessage {
