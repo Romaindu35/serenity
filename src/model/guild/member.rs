@@ -240,6 +240,7 @@ impl Member {
     /// Returns the DiscordTag of a Member, taking possible nickname into account.
     #[inline]
     #[must_use]
+    #[deprecated = "Use User::tag to get the correct Discord username format or Self::display_name for the name that users will see."]
     pub fn distinct(&self) -> String {
         if let Some(discriminator) = self.user.discriminator {
             format!("{}#{:04}", self.display_name(), discriminator.get())
@@ -435,8 +436,11 @@ impl Member {
     /// And/or returns [`ModelError::ItemMissing`] if the "default channel" of the guild is not
     /// found.
     #[cfg(feature = "cache")]
+    #[deprecated = "Use Guild::user_permissions_in, as this doesn't consider permission overwrites"]
     pub fn permissions(&self, cache: impl AsRef<Cache>) -> Result<Permissions> {
         let guild = cache.as_ref().guild(self.guild_id).ok_or(ModelError::GuildNotFound)?;
+
+        #[allow(deprecated)]
         Ok(guild.member_permissions(self))
     }
 

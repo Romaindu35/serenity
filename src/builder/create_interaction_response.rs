@@ -1,3 +1,4 @@
+use super::create_poll::Ready;
 #[cfg(feature = "http")]
 use super::{check_overflow, Builder};
 use super::{
@@ -5,6 +6,7 @@ use super::{
     CreateAllowedMentions,
     CreateAttachment,
     CreateEmbed,
+    CreatePoll,
     EditAttachments,
 };
 #[cfg(feature = "http")]
@@ -64,6 +66,13 @@ pub enum CreateInteractionResponse {
     /// Corresponds to Discord's `PREMIUM_REQUIRED'.
     #[deprecated = "use premium button components via `CreateButton::new_premium` instead"]
     PremiumRequired,
+    /// Not valid for autocomplete and Ping interactions. Only available for applications with
+    /// Activities enabled.
+    ///
+    /// Responds to the interaction by launching the Activity associated with the app.
+    ///
+    /// Corresponds to Discord's `LAUNCH_ACTIVITY`.
+    LaunchActivity,
 }
 
 impl serde::Serialize for CreateInteractionResponse {
@@ -81,6 +90,7 @@ impl serde::Serialize for CreateInteractionResponse {
             Self::Autocomplete(_) => 8,
             Self::Modal(_) => 9,
             Self::PremiumRequired => 10,
+            Self::LaunchActivity => 12,
         })?;
 
         match self {
@@ -92,6 +102,7 @@ impl serde::Serialize for CreateInteractionResponse {
             Self::Autocomplete(x) => map.serialize_entry("data", &x)?,
             Self::Modal(x) => map.serialize_entry("data", &x)?,
             Self::PremiumRequired => map.serialize_entry("data", &None::<()>)?,
+            Self::LaunchActivity => map.serialize_entry("data", &None::<()>)?,
         }
 
         map.end()
@@ -179,6 +190,8 @@ pub struct CreateInteractionResponseMessage {
     flags: Option<InteractionResponseFlags>,
     #[serde(skip_serializing_if = "Option::is_none")]
     components: Option<Vec<CreateActionRow>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    poll: Option<CreatePoll<Ready>>,
     attachments: EditAttachments,
 }
 
@@ -294,6 +307,15 @@ impl CreateInteractionResponseMessage {
         self.components = Some(components);
         self
     }
+
+    /// Adds a poll to the message. Only one poll can be added per message.
+    ///
+    /// See [`CreatePoll`] for more information on creating and configuring a poll.
+    pub fn poll(mut self, poll: CreatePoll<Ready>) -> Self {
+        self.poll = Some(poll);
+        self
+    }
+
     super::button_and_select_menu_convenience_methods!(self.components);
 }
 

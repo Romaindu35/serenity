@@ -648,10 +648,10 @@ impl PartialGuild {
     /// lacks permission. Otherwise returns [`Error::Http`], as well as if invalid data is given.
     ///
     /// [Create Guild Expressions]: Permissions::CREATE_GUILD_EXPRESSIONS
-    pub async fn create_sticker<'a>(
+    pub async fn create_sticker(
         &self,
         cache_http: impl CacheHttp,
-        builder: CreateSticker<'a>,
+        builder: CreateSticker<'_>,
     ) -> Result<Sticker> {
         self.id.create_sticker(cache_http, builder).await
     }
@@ -1035,10 +1035,38 @@ impl PartialGuild {
     /// Calculate a [`Member`]'s permissions in the guild.
     #[inline]
     #[must_use]
+    #[deprecated = "Use PartialGuild::user_permissions_in, as this doesn't consider permission overwrites"]
     pub fn member_permissions(&self, member: &Member) -> Permissions {
         Guild::user_permissions_in_(
             None,
             member.user.id,
+            &member.roles,
+            self.id,
+            &self.roles,
+            self.owner_id,
+        )
+    }
+
+    /// Calculate a [`PartialMember`]'s permissions in the guild.
+    ///
+    /// # Panics
+    ///
+    /// Panics if the passed [`UserId`] does not match the [`PartialMember`] id, if user is Some.
+    #[inline]
+    #[must_use]
+    #[deprecated = "Use PartialGuild::partial_member_permissions_in, as this doesn't consider permission overwrites"]
+    pub fn partial_member_permissions(
+        &self,
+        member_id: UserId,
+        member: &PartialMember,
+    ) -> Permissions {
+        if let Some(user) = &member.user {
+            assert_eq!(user.id, member_id, "User::id does not match provided PartialMember");
+        }
+
+        Guild::user_permissions_in_(
+            None,
+            member_id,
             &member.roles,
             self.id,
             &self.roles,
